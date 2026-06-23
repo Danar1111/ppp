@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --color-primary-50: #e6f7ed;
+    --color-primary-100: #ccefdc;
+    --color-primary-200: #99dfb8;
+    --color-primary-300: #66cf95;
+    --color-primary-400: #33bf71;
+    --color-primary-500: #005B2B;
+    --color-primary-600: #004d24;
+    --color-primary-700: #003e1c;
+    --color-primary-800: #002e15;
+    --color-primary-900: #001f0e;
+
+    --color-accent-50: #fef3c7;
+    --color-accent-100: #fde68a;
+    --color-accent-200: #fcd34d;
+    --color-accent-300: #fbbf24;
+    --color-accent-400: #fbbf24;
+    --color-accent-500: #f59e0b;
+    --color-accent-600: #D97706;
+    --color-accent-700: #b45309;
+    --color-accent-800: #92400e;
+    --color-accent-900: #78350f;
+
+    --color-dark-green: #00401E;
+    --color-dark-green-hover: #003318;
+
+    --shadow-ambient: 0px 4px 12px rgba(15, 23, 42, 0.05);
+    --shadow-premium: 0px 8px 30px rgba(15, 23, 42, 0.08);
+
+    --font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* -----------------------------------------------
+   LANDING PAGE ANIMATIONS & SCROLL REVEAL
+   ----------------------------------------------- */
+
+/* Immediate entrance animations (for hero above-the-fold) */
+@keyframes fadeInUpHero {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleInHero {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-hero-up {
+    opacity: 0;
+    animation: fadeInUpHero 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-hero-scale {
+    opacity: 0;
+    animation: scaleInHero 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered delays for hero elements */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Scroll reveal animations (triggered via JS IntersectionObserver) */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delays for staggered card grids on scroll */
+.reveal-delay-100 { transition-delay: 100ms; }
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-300 { transition-delay: 300ms; }
+.reveal-delay-400 { transition-delay: 400ms; }

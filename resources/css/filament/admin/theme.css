@@ -1,0 +1,422 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+@source '../../../../resources/views/custom-login.blade.php';
+@source '../../../../resources/views/components/**/*';
+
+@theme {
+    --color-primary-50: #e6f7ed;
+    --color-primary-100: #ccefdc;
+    --color-primary-200: #99dfb8;
+    --color-primary-300: #66cf95;
+    --color-primary-400: #33bf71;
+    --color-primary-500: #005B2B;
+    --color-primary-600: #004d24;
+    --color-primary-700: #003e1c;
+    --color-primary-800: #002e15;
+    --color-primary-900: #001f0e;
+
+    --color-accent-50: #fef3c7;
+    --color-accent-100: #fde68a;
+    --color-accent-200: #fcd34d;
+    --color-accent-300: #fbbf24;
+    --color-accent-400: #fbbf24;
+    --color-accent-500: #f59e0b;
+    --color-accent-600: #D97706;
+    --color-accent-700: #b45309;
+    --color-accent-800: #92400e;
+    --color-accent-900: #78350f;
+
+    --color-dark-green: #00401E;
+    --color-dark-green-deep: #002810;
+
+    --font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* ============================================================
+   MAJESTIC GREEN & GOLD — Enterprise SaaS Theme for Filament v3
+   ============================================================ */
+
+/* -----------------------------------------------
+   1. SIDEBAR — Seamless Dark Forest Green
+   ----------------------------------------------- */
+
+/* Core sidebar background */
+.fi-sidebar {
+    background-color: var(--color-dark-green) !important;
+}
+
+/* Brand / Logo header area — seamless with sidebar (NO white box) */
+.fi-sidebar-header {
+    background-color: var(--color-dark-green) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-bottom: 1rem !important;
+}
+
+/* The header container itself */
+.fi-sidebar-header-ctn {
+    background-color: var(--color-dark-green) !important;
+}
+
+/* Custom brand logo box and text colors (Always white/translucent for dark bg) */
+.fi-brand-name {
+    color: #ffffff !important;
+}
+.fi-brand-subtitle {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+.fi-brand-logo-box {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border: none !important;
+}
+
+/* Navigation group labels — muted uppercase */
+.fi-sidebar-group-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-transform: uppercase !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+}
+
+/* Inactive sidebar item text & icons */
+.fi-sidebar-item .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: #D1D5DB !important; /* text-gray-300 */
+    transition: color 0.2s ease !important;
+}
+.fi-sidebar-item .fi-sidebar-item-btn .fi-sidebar-item-icon {
+    color: #9CA3AF !important; /* text-gray-400 */
+    transition: color 0.2s ease !important;
+}
+
+/* Sidebar item hover — subtle glass effect */
+.fi-sidebar-item:hover:not(.fi-active) .fi-sidebar-item-btn {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-radius: 0.5rem !important;
+}
+.fi-sidebar-item:hover:not(.fi-active) .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: #F3F4F6 !important; /* text-gray-100 */
+}
+.fi-sidebar-item:hover:not(.fi-active) .fi-sidebar-item-btn .fi-sidebar-item-icon {
+    color: #D1D5DB !important;
+}
+
+/* Active sidebar item — pure white text + subtle highlight + gold left border */
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+    background-color: rgba(255, 255, 255, 0.10) !important;
+    border-radius: 0.5rem !important;
+    border-left: 3px solid #D97706 !important;
+    font-weight: 600 !important;
+}
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: #ffffff !important; /* Pure white */
+}
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon {
+    color: #D97706 !important; /* Gold icon */
+}
+
+/* Remove any default Filament active indicator borders */
+.fi-sidebar-group-items .fi-sidebar-item.fi-active {
+    border-left: none !important;
+    background-color: transparent !important;
+}
+
+/* Collapse/Expand sidebar buttons — white on dark bg */
+.fi-sidebar .fi-icon-btn {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.fi-sidebar .fi-icon-btn:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Navigation container */
+.fi-sidebar-nav {
+    background-color: var(--color-dark-green) !important;
+}
+
+/* Hide sidebar scrollbar for a clean look */
+.fi-sidebar::-webkit-scrollbar,
+.fi-sidebar-nav::-webkit-scrollbar,
+.fi-sidebar *::-webkit-scrollbar {
+    display: none !important;
+}
+.fi-sidebar,
+.fi-sidebar-nav {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+/* When sidebar is collapsed, remove vertical gaps/margins between navigation groups */
+.fi-main-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav-groups {
+    gap: 0 !important;
+}
+.fi-main-sidebar:not(.fi-sidebar-open) .fi-sidebar-group {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* -----------------------------------------------
+   2. MAIN CANVAS — Clean bg-slate-50
+   ----------------------------------------------- */
+.fi-layout,
+body.fi-body,
+.fi-main-ctn {
+    background-color: #f8fafc !important; /* bg-slate-50 */
+}
+
+/* -----------------------------------------------
+   3. TOPBAR — Premium white with readable text & icons
+   ----------------------------------------------- */
+.fi-topbar {
+    background-color: var(--color-dark-green) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure all text and icons in topbar are white/light-gray for dark bg readability (excluding dropdown contents) */
+.fi-topbar .fi-breadcrumbs-item,
+.fi-topbar .fi-breadcrumbs-item a,
+.fi-topbar .fi-breadcrumbs-item span,
+.fi-topbar .fi-topbar-item-label,
+.fi-topbar .fi-user-menu-trigger-text,
+.fi-topbar span:not(.fi-dropdown-panel *),
+.fi-topbar a:not(.fi-dropdown-panel *),
+.fi-topbar button:not(.fi-dropdown-panel *) {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Active breadcrumb item (current page) should be pure white */
+.fi-topbar .fi-breadcrumbs-item:last-child,
+.fi-topbar .fi-breadcrumbs-item:last-child a,
+.fi-topbar .fi-breadcrumbs-item:last-child span {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+/* Breadcrumbs separator */
+.fi-topbar .fi-breadcrumbs-item-separator {
+    color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Topbar icons color */
+.fi-topbar svg:not(.fi-dropdown-panel *) {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Topbar icon button hover state */
+.fi-topbar .fi-icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+.fi-topbar .fi-icon-btn:hover svg {
+    color: #ffffff !important;
+}
+
+/* Topbar search wrapper and input styling */
+.fi-global-search-field .fi-input-wrp {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+}
+.fi-global-search-field .fi-input-wrp input {
+    color: #ffffff !important;
+}
+.fi-global-search-field .fi-input-wrp input::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+.fi-global-search-field .fi-input-wrp svg {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* -----------------------------------------------
+   4. STAT CARDS — Premium Accent Borders
+   ----------------------------------------------- */
+.fi-wi-stats-overview-stat {
+    background-color: #ffffff !important;
+    border-radius: 0.75rem !important; /* rounded-xl */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important; /* shadow-sm */
+    border: none !important;
+    border-top: 3px solid var(--color-primary-500) !important;
+    border-inline-start: none !important;
+    border-inline-end: none !important;
+    border-bottom: none !important;
+    transition: all 0.25s ease !important;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important; /* shadow-md */
+}
+
+/* Accent colors for specific stat cards */
+.fi-wi-stats-overview-stat:nth-child(2) {
+    border-top-color: #3b82f6 !important; /* Blue for second stat */
+}
+
+.fi-wi-stats-overview-stat:nth-child(3) {
+    border-top-color: #D97706 !important; /* Gold for third stat */
+}
+
+/* -----------------------------------------------
+   5. CARDS & SECTIONS — Borderless, shadow-sm, rounded-xl
+   ----------------------------------------------- */
+.fi-card,
+.fi-section,
+.fi-ta-ctn,
+.fi-wi-chart {
+    background-color: #ffffff !important;
+    border-radius: 0.75rem !important; /* rounded-xl */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+/* Sections that are not contained should have transparent background and no shadow */
+.fi-section.fi-section-not-contained {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* -----------------------------------------------
+   6. TABLES — Spacious, clean, hover effects
+   ----------------------------------------------- */
+.fi-ta-table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.fi-ta-row {
+    transition: background-color 0.2s ease !important;
+}
+
+.fi-ta-row:hover {
+    background-color: #f8fafc !important;
+}
+
+.fi-ta-header-cell {
+    background-color: #f8fafc !important;
+    text-transform: uppercase !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    color: #64748b !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.fi-ta-cell {
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+}
+
+/* -----------------------------------------------
+   7. CHART WIDGET — Constrained height
+   ----------------------------------------------- */
+.fi-wi-chart canvas {
+    max-height: 280px !important;
+}
+
+/* -----------------------------------------------
+   8. WELCOME WIDGET — Clean styling
+   ----------------------------------------------- */
+.fi-wi-account {
+    background-color: #ffffff !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+}
+
+/* -----------------------------------------------
+   9. PREMIUM ANIMATIONS & SMOOTH TRANSITIONS
+   ----------------------------------------------- */
+
+/* Sidebar collapse/expand smooth transitions and width overrides */
+.fi-sidebar {
+    width: 4.5rem !important; /* Default collapsed width */
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.fi-sidebar.fi-sidebar-open {
+    width: 16rem !important; /* Expanded width */
+}
+
+
+.fi-topbar {
+    transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-right 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-inline-start 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Smooth fade-in for brand subtitle, name, labels when opening sidebar */
+.fi-brand-name,
+.fi-brand-subtitle,
+.fi-sidebar-group-label,
+.fi-sidebar-item-label {
+    transition: opacity 0.25s ease, visibility 0.25s ease !important;
+}
+
+/* Keyframes for premium fade-in-up entrance animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animation utilities */
+.animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-scale-in {
+    opacity: 0;
+    animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Animation delays for staggered entrance */
+.delay-100 {
+    animation-delay: 100ms;
+}
+
+.delay-200 {
+    animation-delay: 200ms;
+}
+
+.delay-300 {
+    animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
+}

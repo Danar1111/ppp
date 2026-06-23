@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Theme Colors */
+    --color-primary: #005B2B;
+    --color-primary-dark: #004d24;
+    --color-accent: #D97706;
+    --color-accent-hover: #b45309;
+    --color-sidebar-bg: #00401E;
+    
+    /* Layout Variables */
+    --sidebar-width: 280px;
+    
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: theme('colors.neutral.50');
+    color: theme('colors.neutral.900');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  /* Ambient shadow for cards and blocks */
+  .ambient-shadow {
+    box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.04);
+  }
+  
+  /* Elevate interactive elements slightly on hover */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 12px 24px rgba(15, 23, 42, 0.07);
+    border-color: rgba(0, 91, 43, 0.15);
+  }
+
+  /* Form Input Styling with focus transitions */
+  .form-input-custom {
+    @apply w-full px-4 py-2.5 border border-neutral-300 rounded-lg text-neutral-800 placeholder-neutral-400 bg-white transition-all duration-200 outline-none;
+  }
+
+  .form-input-custom:focus {
+    @apply border-primary ring-2 ring-primary/10 bg-white;
+  }
+
+  /* Custom Status Badges */
+  .status-badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold border inline-flex items-center gap-1.5;
+  }
+
+  .status-badge-active {
+    @apply bg-green-50 text-green-700 border-green-200;
+  }
+
+  .status-badge-pending {
+    @apply bg-amber-50 text-amber-700 border-amber-200;
+  }
+
+  .status-badge-inactive {
+    @apply bg-slate-50 text-slate-600 border-slate-200;
+  }
+}
+
+/* Custom smooth transitions for sidebar collapsing */
+.sidebar-transition {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom premium scrollbar for data tables */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: theme('colors.neutral.200');
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.neutral.300');
+}
