@@ -132,7 +132,7 @@ class PresentationSeeder extends Seeder
                 'nik' => $faker->unique()->numerify('3211############'),
                 'name' => $faker->name(),
                 'email' => $faker->unique()->safeEmail(),
-                'phone' => $faker->phoneNumber(),
+                'phone' => $faker->numerify('08##########'),
                 'address' => $faker->address(),
                 'village_id' => $randomVillage->id,
                 'status' => $status,
