@@ -51,13 +51,29 @@ class StrukturOrganisasi extends Page
 
         switch ($this->activeLevel) {
             case 'DPW':
-                return Province::withCount('committees')->get();
+                return Province::withCount(['committees' => function ($q) {
+                    $q->whereHas('position', function ($qp) {
+                        $qp->where('level', 'DPW');
+                    });
+                }])->get();
             case 'DPC':
-                return Regency::withCount('committees')->get();
+                return Regency::withCount(['committees' => function ($q) {
+                    $q->whereHas('position', function ($qp) {
+                        $qp->where('level', 'DPC');
+                    });
+                }])->get();
             case 'PAC':
-                return District::withCount('committees')->get();
+                return District::withCount(['committees' => function ($q) {
+                    $q->whereHas('position', function ($qp) {
+                        $qp->where('level', 'PAC');
+                    });
+                }])->get();
             case 'Ranting':
-                return Village::withCount('committees')->get();
+                return Village::withCount(['committees' => function ($q) {
+                    $q->whereHas('position', function ($qp) {
+                        $qp->where('level', 'Ranting');
+                    });
+                }])->get();
             default:
                 return collect();
         }
