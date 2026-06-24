@@ -19,6 +19,7 @@ class CommitteesTable
             ->columns([
                 ImageColumn::make('member.photo')
                     ->circular()
+                    ->disk('public')
                     ->defaultImageUrl(fn (Committee $record): string => 'https://ui-avatars.com/api/?name=' . urlencode($record->member->name ?? 'A') . '&background=0D8A4E&color=fff')
                     ->label('Foto'),
 

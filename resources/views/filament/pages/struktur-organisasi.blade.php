@@ -83,7 +83,9 @@
                             });
 
                             $renderCard = function($committee, $borderColorClass) {
-                                $avatar = 'https://ui-avatars.com/api/?name=' . urlencode($committee->member->name ?? 'A') . '&background=0D8A4E&color=fff&size=128';
+                                $avatar = !empty($committee->member->photo) 
+                                    ? asset('storage/' . $committee->member->photo) 
+                                    : 'https://ui-avatars.com/api/?name=' . urlencode($committee->member->name ?? 'A') . '&background=0D8A4E&color=fff&size=128';
                                 $name = $committee->member->name ?? 'Tidak Diketahui';
                                 $position = $committee->position->name ?? 'Jabatan Tidak Diketahui';
                                 $sk = $committee->sk_number;

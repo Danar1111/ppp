@@ -26,6 +26,7 @@ class MembersTable
                 ImageColumn::make('photo')
                     ->circular()
                     ->disk('public')
+                    ->defaultImageUrl(fn (Member $record): string => 'https://ui-avatars.com/api/?name=' . urlencode($record->name ?? 'A') . '&background=0D8A4E&color=fff')
                     ->label('Foto'),
                 TextColumn::make('name')
                     ->searchable()
