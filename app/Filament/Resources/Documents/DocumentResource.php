@@ -26,6 +26,10 @@ class DocumentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    protected static ?string $pluralModelLabel = 'Dokumen';
+
+    protected static ?string $modelLabel = 'Dokumen';
+
     public static function form(Schema $schema): Schema
     {
         return DocumentForm::configure($schema);

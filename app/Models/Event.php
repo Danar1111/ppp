@@ -13,6 +13,8 @@ class Event extends Model
         'name',
         'description',
         'location',
+        'latitude',
+        'longitude',
         'start_datetime',
         'end_datetime',
         'status',
@@ -22,4 +24,9 @@ class Event extends Model
         'start_datetime' => 'datetime',
         'end_datetime' => 'datetime',
     ];
+
+    public function attendances(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

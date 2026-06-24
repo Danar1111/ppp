@@ -22,4 +22,9 @@ class Regency extends Model
     {
         return $this->hasMany(District::class);
     }
+
+    public function committees(): HasMany
+    {
+        return $this->hasMany(Committee::class);
+    }
 }

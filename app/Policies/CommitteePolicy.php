@@ -1,37 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Committee;
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CommitteePolicy
 {
     use HandlesAuthorization;
-
-    public function viewAny(User $user): bool
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return $user->hasPermissionTo('view_any_committee');
+        return $authUser->can('ViewAny:Committee');
     }
 
-    public function view(User $user, Committee $committee): bool
+    public function view(AuthUser $authUser, Committee $committee): bool
     {
-        return $user->hasPermissionTo('view_committee');
+        return $authUser->can('View:Committee');
     }
 
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return $user->hasPermissionTo('create_committee');
+        return $authUser->can('Create:Committee');
     }
 
-    public function update(User $user, Committee $committee): bool
+    public function update(AuthUser $authUser, Committee $committee): bool
     {
-        return $user->hasPermissionTo('update_committee');
+        return $authUser->can('Update:Committee');
     }
 
-    public function delete(User $user, Committee $committee): bool
+    public function delete(AuthUser $authUser, Committee $committee): bool
     {
-        return $user->hasPermissionTo('delete_committee');
+        return $authUser->can('Delete:Committee');
     }
+
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Committee');
+    }
+
+    public function restore(AuthUser $authUser, Committee $committee): bool
+    {
+        return $authUser->can('Restore:Committee');
+    }
+
+    public function forceDelete(AuthUser $authUser, Committee $committee): bool
+    {
+        return $authUser->can('ForceDelete:Committee');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:Committee');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:Committee');
+    }
+
+    public function replicate(AuthUser $authUser, Committee $committee): bool
+    {
+        return $authUser->can('Replicate:Committee');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Committee');
+    }
+
 }

@@ -16,4 +16,9 @@ class Village extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function committees(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Committee::class);
+    }
 }

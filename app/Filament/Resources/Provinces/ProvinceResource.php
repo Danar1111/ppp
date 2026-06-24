@@ -26,6 +26,10 @@ class ProvinceResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Provinsi';
+
+    protected static ?string $modelLabel = 'Provinsi';
+
     public static function form(Schema $schema): Schema
     {
         return ProvinceForm::configure($schema);

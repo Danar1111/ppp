@@ -11,6 +11,26 @@ class CustomLogin extends BaseLogin
 
     protected static string $layout = 'filament-panels::components.layout.base';
 
+    public function mount(): void
+    {
+        if (filament()->auth()->check()) {
+            $user = filament()->auth()->user();
+            if ($user && $user->hasAnyRole([
+                'Super Admin',
+                'Admin Pusat (DPP)',
+                'Admin Wilayah (DPW)',
+                'Admin Cabang (DPC)',
+                'Admin Kecamatan (PAC)',
+            ])) {
+                redirect()->intended('/admin');
+                return;
+            }
+            redirect()->intended(filament()->getUrl());
+        }
+
+        parent::mount();
+    }
+
     protected function getAuthenticateFormAction(): Action
     {
         return parent::getAuthenticateFormAction()

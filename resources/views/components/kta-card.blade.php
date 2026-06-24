@@ -43,7 +43,7 @@
                 </div>
                 <div class="text-left">
                     <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Nomor NIK</span>
-                    <span class="text-[12px] font-bold text-slate-700 font-mono tracking-wider block leading-none">{{ $member->nik }}</span>
+                    <span class="text-[12px] font-bold text-slate-700 font-mono tracking-wider block leading-none">{{ $member->nik ?? '-' }}</span>
                 </div>
                 <div class="text-left">
                     <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Wilayah Asal</span>
@@ -61,7 +61,7 @@
 
             <!-- QR Code on Bottom Right -->
             <div class="absolute bottom-5 right-5 shrink-0 bg-white p-1 rounded-xl border border-slate-200 shadow-md z-10">
-                {!! QrCode::size(60)->margin(0)->generate($member->nik) !!}
+                {!! QrCode::size(60)->margin(0)->generate($member->nik ?? $member->email ?? 'NO-NIK') !!}
             </div>
         </div>
 

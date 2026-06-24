@@ -10,7 +10,7 @@ class MemberOverviewWidget extends BaseWidget
 {
     protected function getStats(): array
     {
-        $query = Member::whereDoesntHave('roles');
+        $query = Member::query();
 
         return [
             Stat::make('Total Kader Aktif', (clone $query)->where('status', 'Aktif')->count())

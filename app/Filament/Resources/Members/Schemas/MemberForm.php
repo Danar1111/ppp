@@ -18,7 +18,10 @@ class MemberForm
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->length(16)
-                    ->numeric()
+                    ->rules(['regex:/^\d+$/'])
+                    ->validationMessages([
+                        'regex' => 'NIK harus berupa 16 digit angka.',
+                    ])
                     ->label('NIK (Nomor Induk Kependudukan)'),
                 TextInput::make('name')
                     ->required()
@@ -51,6 +54,21 @@ class MemberForm
                     ->required()
                     ->default('Pending')
                     ->label('Status Keanggotaan'),
+                TextInput::make('email')
+                    ->email()
+                    ->unique(ignoreRecord: true)
+                    ->label('Alamat Email'),
+                TextInput::make('password')
+                    ->password()
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->dehydrateStateUsing(fn ($state) => \Illuminate\Support\Facades\Hash::make($state))
+                    ->label('Kata Sandi'),
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->label('Peran (Roles)'),
             ]);
     }
 }

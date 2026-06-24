@@ -28,41 +28,50 @@
                         </h2>
                     </div>
 
-                    <!-- Cards Grid for Level Fungsionaris -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        @foreach($levelCommittees as $committee)
-                            <div class="bg-white border border-slate-200 rounded-3xl p-6 flex items-center gap-4 shadow-sm hover:shadow-md transition duration-200">
-                                <!-- Avatar -->
-                                <div class="w-16 h-16 rounded-full overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0 flex items-center justify-center">
-                                    @if($committee->member->photo)
-                                        <img src="{{ asset('storage/' . $committee->member->photo) }}" class="w-full h-full object-cover">
-                                    @else
-                                        <!-- Initials / Fallback -->
-                                        <span class="text-[#005B2B] font-extrabold text-sm uppercase">
-                                            {{ substr($committee->member->name, 0, 2) }}
-                                        </span>
-                                    @endif
+                    @foreach($levelCommittees->groupBy('territory_label') as $territory => $members)
+                        <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                            <!-- Territory Header -->
+                            @if($territory !== 'Nasional')
+                                <div class="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
+                                    <svg class="w-5 h-5 text-[#005B2B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <h3 class="text-lg font-bold text-slate-800">{{ $territory }}</h3>
                                 </div>
-                                <!-- Details -->
-                                <div class="space-y-1 overflow-hidden">
-                                    <h3 class="font-extrabold text-slate-800 text-sm truncate" title="{{ $committee->member->name }}">
-                                        {{ $committee->member->name }}
-                                    </h3>
-                                    <p class="text-xs font-bold text-[#D97706] tracking-wide">
-                                        {{ $committee->position->name }}
-                                    </p>
-                                    @if($committee->sk_number)
-                                        <p class="text-[10px] text-slate-400 font-mono truncate" title="No. SK: {{ $committee->sk_number }}">
-                                            SK: {{ $committee->sk_number }}
-                                        </p>
-                                    @endif
-                                    <p class="text-[10px] text-slate-400">
-                                        {{ $committee->member->village ? $committee->member->village->name : 'N/A' }}
-                                    </p>
-                                </div>
+                            @endif
+
+                            <!-- Cards Grid for Level Fungsionaris -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                @foreach($members as $committee)
+                                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex items-center gap-4 hover:shadow-md transition duration-200 hover:bg-white hover:border-slate-300">
+                                        <!-- Avatar -->
+                                        <div class="w-14 h-14 rounded-full overflow-hidden border border-slate-200 bg-white flex-shrink-0 flex items-center justify-center">
+                                            @if($committee->member->photo)
+                                                <img src="{{ asset('storage/' . $committee->member->photo) }}" class="w-full h-full object-cover">
+                                            @else
+                                                <!-- Initials / Fallback -->
+                                                <span class="text-[#005B2B] font-extrabold text-xs uppercase">
+                                                    {{ substr($committee->member->name, 0, 2) }}
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <!-- Details -->
+                                        <div class="space-y-1 overflow-hidden">
+                                            <h3 class="font-extrabold text-slate-800 text-sm truncate" title="{{ $committee->member->name }}">
+                                                {{ $committee->member->name }}
+                                            </h3>
+                                            <p class="text-xs font-bold text-[#D97706] tracking-wide">
+                                                {{ $committee->position->name }}
+                                            </p>
+                                            @if($committee->sk_number)
+                                                <p class="text-[10px] text-slate-400 font-mono truncate" title="No. SK: {{ $committee->sk_number }}">
+                                                    SK: {{ $committee->sk_number }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             @empty
                 <div class="py-16 text-center text-slate-400 text-sm bg-white rounded-3xl border border-slate-200 max-w-3xl mx-auto shadow-sm">

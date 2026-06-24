@@ -132,7 +132,7 @@
 
                             {{-- QR Code --}}
                             <div class="w-16 h-16 shrink-0 bg-white p-1 rounded-lg border border-slate-100 flex items-center justify-center shadow-inner">
-                                {!! QrCode::size(56)->margin(0)->generate($member->nik) !!}
+                                {!! QrCode::size(56)->margin(0)->generate($member->nik ?? 'TIDAK-ADA-NIK') !!}
                             </div>
                         </div>
 

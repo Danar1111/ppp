@@ -26,6 +26,10 @@ class DistrictResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Kecamatan';
+
+    protected static ?string $modelLabel = 'Kecamatan';
+
     public static function form(Schema $schema): Schema
     {
         return DistrictForm::configure($schema);

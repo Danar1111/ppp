@@ -17,7 +17,7 @@ class StatsOverview extends StatsOverviewWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Anggota', Member::whereDoesntHave('roles')->count())
+            Stat::make('Total Anggota', Member::count())
                 ->description('Jumlah seluruh anggota terdaftar')
                 ->descriptionIcon('heroicon-m-users')
                 ->color('success'),

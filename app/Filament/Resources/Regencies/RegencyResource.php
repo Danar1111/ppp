@@ -26,6 +26,10 @@ class RegencyResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Kabupaten / Kota';
+
+    protected static ?string $modelLabel = 'Kabupaten / Kota';
+
     public static function form(Schema $schema): Schema
     {
         return RegencyForm::configure($schema);

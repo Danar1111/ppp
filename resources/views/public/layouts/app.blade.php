@@ -7,6 +7,9 @@
     
     <title>@yield('title', 'Sistem Informasi & Portal Anggota Partai PPP')</title>
     
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/logo.svg') }}" type="image/svg+xml">
+    
     <!-- Meta SEO -->
     <meta name="description" content="Portal Resmi Partai Persatuan Pembangunan (PPP) Wilayah. Akses keanggotaan, cetak KTA digital, dan pantau kegiatan partai secara dinamis.">
 
@@ -56,15 +59,27 @@
 
                 <!-- Desktop CTA -->
                 <div class="hidden md:flex items-center gap-4">
-                    @auth('member')
-                        <a href="/portal" class="px-5 py-2.5 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition duration-200">
-                            Portal Anggota
-                        </a>
+                    @if(auth()->check())
+                        @if(auth()->user()->hasAnyRole([
+                            'Super Admin',
+                            'Admin Pusat (DPP)',
+                            'Admin Wilayah (DPW)',
+                            'Admin Cabang (DPC)',
+                            'Admin Kecamatan (PAC)'
+                        ]))
+                            <a href="/admin" class="px-5 py-2.5 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition duration-200">
+                                Dashboard Admin
+                            </a>
+                        @else
+                            <a href="/portal" class="px-5 py-2.5 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition duration-200">
+                                Portal Anggota
+                            </a>
+                        @endif
                     @else
                         <a href="/portal/login" class="px-5 py-2.5 border border-[#D97706] hover:bg-[#D97706]/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200">
                             Login Anggota
                         </a>
-                    @endauth
+                    @endif
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -86,15 +101,27 @@
                 <a href="{{ route('public.berita.index') }}" class="block px-3 py-2 rounded-lg font-medium text-white hover:bg-[#005B2B] hover:text-[#D97706] transition">Berita</a>
                 <a href="{{ route('public.struktur') }}" class="block px-3 py-2 rounded-lg font-medium text-white hover:bg-[#005B2B] hover:text-[#D97706] transition">Struktur Pengurus</a>
                 <div class="pt-4 pb-2 border-t border-[#0B4A2D] px-3">
-                    @auth('member')
-                        <a href="/portal" class="block w-full text-center py-2.5 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200">
-                            Portal Anggota
-                        </a>
+                    @if(auth()->check())
+                        @if(auth()->user()->hasAnyRole([
+                            'Super Admin',
+                            'Admin Pusat (DPP)',
+                            'Admin Wilayah (DPW)',
+                            'Admin Cabang (DPC)',
+                            'Admin Kecamatan (PAC)'
+                        ]))
+                            <a href="/admin" class="block w-full text-center py-2.5 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200">
+                                Dashboard Admin
+                            </a>
+                        @else
+                            <a href="/portal" class="block w-full text-center py-2.5 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200">
+                                Portal Anggota
+                            </a>
+                        @endif
                     @else
                         <a href="/portal/login" class="block w-full text-center py-2.5 border border-[#D97706] hover:bg-[#D97706]/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition duration-200">
                             Login Anggota
                         </a>
-                    @endauth
+                    @endif
                 </div>
             </div>
         </div>

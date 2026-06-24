@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Event;
+use App\Models\Office;
 use App\Models\User as Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -77,24 +78,24 @@ class AttendanceController extends Controller
     /**
      * Show daily office check-in form.
      */
-    public function showHarianForm(string $level, string $code)
+    public function showHarianForm(Office $office)
     {
         $member = auth()->user();
-        $office = $this->getOfficeDetails($level, $code);
 
-        // Check if already checked in today
+        // Check if already checked in today for this office
         $exists = Attendance::where('member_id', $member->id)
             ->where('type', 'Harian Kantor')
+            ->where('office_id', $office->id)
             ->whereDate('scanned_at', now()->toDateString())
             ->exists();
 
-        return view('attendance.harian', compact('office', 'level', 'code', 'member', 'exists'));
+        return view('attendance.harian', compact('office', 'member', 'exists'));
     }
 
     /**
      * Submit daily office check-in.
      */
-    public function submitHarianAttendance(Request $request, string $level, string $code)
+    public function submitHarianAttendance(Request $request, Office $office)
     {
         $request->validate([
             'latitude' => 'required|numeric',
@@ -102,11 +103,11 @@ class AttendanceController extends Controller
         ]);
 
         $member = auth()->user();
-        $office = $this->getOfficeDetails($level, $code);
 
-        // Check if already checked in today
+        // Check if already checked in today for this office
         $exists = Attendance::where('member_id', $member->id)
             ->where('type', 'Harian Kantor')
+            ->where('office_id', $office->id)
             ->whereDate('scanned_at', now()->toDateString())
             ->exists();
 
@@ -115,21 +116,26 @@ class AttendanceController extends Controller
         }
 
         // Geofencing verification
-        $distance = $this->calculateDistance(
-            $request->latitude,
-            $request->longitude,
-            $office['latitude'],
-            $office['longitude']
-        );
+        if (!empty($office->latitude) && !empty($office->longitude)) {
+            $distance = $this->calculateDistance(
+                $request->latitude,
+                $request->longitude,
+                $office->latitude,
+                $office->longitude
+            );
 
-        if ($distance > 50) {
-            return back()->withErrors([
-                'location' => 'Anda berada terlalu jauh dari lokasi kantor (' . round($distance, 1) . ' meter). Batas maksimal adalah 50 meter.'
-            ])->withInput();
+            $radius = $office->radius_meters ?: 50;
+
+            if ($distance > $radius) {
+                return back()->withErrors([
+                    'location' => 'Anda berada terlalu jauh dari lokasi kantor (' . round($distance, 1) . ' meter). Batas maksimal adalah ' . $radius . ' meter.'
+                ])->withInput();
+            }
         }
 
         Attendance::create([
             'member_id' => $member->id,
+            'office_id' => $office->id,
             'event_id' => null,
             'type' => 'Harian Kantor',
             'scanned_at' => now(),
@@ -137,7 +143,7 @@ class AttendanceController extends Controller
             'location_lng' => $request->longitude,
         ]);
 
-        return back()->with('success', 'Presensi Harian Kantor (' . $office['name'] . ') berhasil direkam.');
+        return back()->with('success', 'Presensi Harian Kantor (' . $office->name . ') berhasil direkam.');
     }
 
     /**
@@ -229,57 +235,7 @@ class AttendanceController extends Controller
         ]);
     }
 
-    /**
-     * Retrieve office details based on level and region code.
-     */
-    protected function getOfficeDetails(string $level, string $code): array
-    {
-        $level = strtoupper($level);
-        $name = "Kantor Sekretariat PPP";
-        
-        // Base mock coordinate (used as default / fallback, e.g. Central Jakarta Office)
-        $latitude = -6.2088;
-        $longitude = 106.8456;
-
-        if ($level === 'DPP') {
-            $name = "Kantor Pusat DPP PPP";
-            $latitude = -6.2088; // Jakarta
-            $longitude = 106.8456;
-        } elseif ($level === 'DPW') {
-            $province = \App\Models\Province::where('code', $code)->first();
-            $provName = $province ? $province->name : 'Wilayah';
-            $name = "Kantor DPW PPP Provinsi " . $provName;
-            // Mock coordinate for DPW (Bandung)
-            $latitude = -6.9175;
-            $longitude = 107.6191;
-        } elseif ($level === 'DPC') {
-            $regency = \App\Models\Regency::where('code', $code)->first();
-            $regName = $regency ? $regency->name : 'Cabang';
-            $name = "Kantor DPC PPP " . $regName;
-            // Mock coordinate for DPC (Surabaya)
-            $latitude = -7.2575;
-            $longitude = 112.7521;
-        } elseif ($level === 'PAC') {
-            $district = \App\Models\District::where('code', $code)->first();
-            $distName = $district ? $district->name : 'Kecamatan';
-            $name = "Kantor PAC PPP Kecamatan " . $distName;
-            // Mock coordinate for PAC (Yogyakarta)
-            $latitude = -7.7956;
-            $longitude = 110.3695;
-        }
-
-        // To make testing extremely easy and avoid hard blocks on local,
-        // if code is or contains 'test', make it inherit coordinates to avoid failures.
-        if (str_contains(strtolower($code), 'test')) {
-            $name .= " (Mode Uji Coba)";
-        }
-
-        return [
-            'name' => $name,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-        ];
-    }
+    // (getOfficeDetails was refactored and removed in favor of dynamic Office models)
 
     /**
      * Compute Haversine distance in meters between two GPS coordinates.

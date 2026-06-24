@@ -19,16 +19,16 @@ class Dashboard extends Page
 
     protected static ?int $navigationSort = -2;
 
-    protected static ?string $title = 'Dashboard';
+    protected static ?string $title = 'Dasbor';
 
     public function getTitle(): string|Htmlable
     {
-        return 'Dashboard';
+        return 'Dasbor';
     }
 
     public function getTotalAnggota(): int
     {
-        return Member::whereDoesntHave('roles')->count();
+        return Member::count();
     }
 
     public function getTotalPengurus(): int
@@ -43,22 +43,22 @@ class Dashboard extends Page
 
     public function getAnggotaAktif(): int
     {
-        return Member::whereDoesntHave('roles')->where('status', 'Aktif')->count();
+        return Member::where('status', 'Aktif')->count();
     }
 
     public function getAnggotaPending(): int
     {
-        return Member::whereDoesntHave('roles')->where('status', 'Pending')->count();
+        return Member::where('status', 'Pending')->count();
     }
 
     public function getAnggotaNonaktif(): int
     {
-        return Member::whereDoesntHave('roles')->where('status', 'Nonaktif')->count();
+        return Member::where('status', 'Nonaktif')->count();
     }
 
     public function getRecentActivities(): Collection
     {
-        return Member::whereDoesntHave('roles')
+        return Member::query()
             ->orderBy('updated_at', 'desc')
             ->limit(5)
             ->get()

@@ -34,6 +34,10 @@ class MemberResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Anggota';
+
+    protected static ?string $modelLabel = 'Anggota';
+
     public static function form(Schema $schema): Schema
     {
         return MemberForm::configure($schema);
@@ -131,7 +135,7 @@ class MemberResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->whereDoesntHave('roles');
+        return parent::getEloquentQuery();
     }
 
     public static function getRelations(): array

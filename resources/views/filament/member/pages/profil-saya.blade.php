@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <span class="block text-xxs font-bold text-slate-400 uppercase tracking-widest">Kelurahan / Desa</span>
-                    <span class="text-sm font-semibold text-slate-700">{{ $member->village->name }}</span>
+                    <span class="text-sm font-semibold text-slate-700">{{ $member->village->name ?? '-' }}</span>
                 </div>
             </div>
         </div>

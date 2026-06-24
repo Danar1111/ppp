@@ -1,37 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Regency;
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RegencyPolicy
 {
     use HandlesAuthorization;
-
-    public function viewAny(User $user): bool
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return $user->hasPermissionTo('view_any_regency');
+        return $authUser->can('ViewAny:Regency');
     }
 
-    public function view(User $user, Regency $regency): bool
+    public function view(AuthUser $authUser, Regency $regency): bool
     {
-        return $user->hasPermissionTo('view_regency');
+        return $authUser->can('View:Regency');
     }
 
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return $user->hasPermissionTo('create_regency');
+        return $authUser->can('Create:Regency');
     }
 
-    public function update(User $user, Regency $regency): bool
+    public function update(AuthUser $authUser, Regency $regency): bool
     {
-        return $user->hasPermissionTo('update_regency');
+        return $authUser->can('Update:Regency');
     }
 
-    public function delete(User $user, Regency $regency): bool
+    public function delete(AuthUser $authUser, Regency $regency): bool
     {
-        return $user->hasPermissionTo('delete_regency');
+        return $authUser->can('Delete:Regency');
     }
+
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Regency');
+    }
+
+    public function restore(AuthUser $authUser, Regency $regency): bool
+    {
+        return $authUser->can('Restore:Regency');
+    }
+
+    public function forceDelete(AuthUser $authUser, Regency $regency): bool
+    {
+        return $authUser->can('ForceDelete:Regency');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:Regency');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:Regency');
+    }
+
+    public function replicate(AuthUser $authUser, Regency $regency): bool
+    {
+        return $authUser->can('Replicate:Regency');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Regency');
+    }
+
 }

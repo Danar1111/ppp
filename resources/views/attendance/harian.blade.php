@@ -122,7 +122,7 @@
             </div>
 
             <!-- Attendance Form -->
-            <form id="attendanceForm" action="{{ route('absen.harian.submit', ['level' => $level, 'code' => $code]) }}" method="POST" class="space-y-4">
+            <form id="attendanceForm" action="{{ route('absen.harian.submit', ['office' => $office->id]) }}" method="POST" class="space-y-4">
                 @csrf
                 <input type="hidden" name="latitude" id="latitude">
                 <input type="hidden" name="longitude" id="longitude">

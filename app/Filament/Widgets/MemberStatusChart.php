@@ -17,9 +17,9 @@ class MemberStatusChart extends ChartWidget
 
     protected function getData(): array
     {
-        $aktif = Member::whereDoesntHave('roles')->where('status', 'Aktif')->count();
-        $pending = Member::whereDoesntHave('roles')->where('status', 'Pending')->count();
-        $nonaktif = Member::whereDoesntHave('roles')->where('status', 'Nonaktif')->count();
+        $aktif = Member::where('status', 'Aktif')->count();
+        $pending = Member::where('status', 'Pending')->count();
+        $nonaktif = Member::where('status', 'Nonaktif')->count();
 
         return [
             'datasets' => [

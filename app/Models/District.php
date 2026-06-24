@@ -22,4 +22,9 @@ class District extends Model
     {
         return $this->hasMany(Village::class);
     }
+
+    public function committees(): HasMany
+    {
+        return $this->hasMany(Committee::class);
+    }
 }

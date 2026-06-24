@@ -31,7 +31,7 @@ class MembersTable
                     ->searchable()
                     ->sortable()
                     ->label('Nama')
-                    ->description(fn (Member $record): string => $record->nik),
+                    ->description(fn (Member $record): ?string => $record->nik),
                 TextColumn::make('phone')
                     ->searchable()
                     ->label('Telepon'),

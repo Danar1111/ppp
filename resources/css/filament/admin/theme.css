@@ -420,3 +420,29 @@ body.fi-body,
 .delay-400 {
     animation-delay: 400ms;
 }
+
+/* -----------------------------------------------
+   10. FILE UPLOAD DROPZONE — Dashed Outline & Accent Background
+   ----------------------------------------------- */
+.filepond--panel-root {
+    background-color: #f8fafc !important; /* light slate-50 background */
+    border: 2px dashed #005B2B !important; /* primary green dashed outline */
+    border-radius: 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Hover state */
+.filepond--root:hover .filepond--panel-root {
+    background-color: #e6f7ed !important; /* light brand green background on hover */
+    border-color: #004d24 !important;
+}
+
+/* Focus / active state */
+.filepond--root[data-filepond-state="focused"] .filepond--panel-root {
+    border-color: #D97706 !important; /* gold outline when focused */
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15) !important;
+}
+
+.filepond--drop-label {
+    color: #475569 !important; /* dark slate text */
+}

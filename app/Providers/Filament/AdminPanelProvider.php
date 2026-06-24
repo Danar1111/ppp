@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,9 +29,10 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->darkMode(false)
-            ->brandName('SIP - PPP')
+            ->brandName('Sistem Manajemen PPP')
             ->brandLogo(fn () => view('filament.components.sidebar-brand'))
             ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/logo.svg'))
             ->colors([
                 // Forest Green primary brand color (#005B2B)
                 'primary' => Color::hex('#005B2B'),
@@ -42,6 +44,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Plus Jakarta Sans')
             ->sidebarCollapsibleOnDesktop()
+            ->navigationGroups([
+                'Manajemen SDM',
+                'Struktur Organisasi',
+                'Operasional & Arsip',
+                'Pemenangan Pemilu',
+                'Publikasi',
+                'Data Wilayah',
+                'Manajemen Akses',
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -63,6 +74,14 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->plugins([
+                FilamentShieldPlugin::make()
+                    ->navigationGroup('Manajemen Akses')
+                    ->navigationSort(2)
+                    ->navigationLabel('Peran & Hak Akses')
+                    ->pluralModelLabel('Peran & Hak Akses')
+                    ->modelLabel('Peran & Hak Akses'),
             ])
             ->authMiddleware([
                 \App\Http\Middleware\RedirectToPortalLogin::class,

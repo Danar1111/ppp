@@ -32,6 +32,21 @@ class Article extends Model
                 $article->slug = Str::slug($article->title);
             }
         });
+
+        static::deleting(function ($article) {
+            if ($article->image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($article->image);
+            }
+        });
+
+        static::updating(function ($article) {
+            if ($article->isDirty('image')) {
+                $oldImage = $article->getOriginal('image');
+                if ($oldImage) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($oldImage);
+                }
+            }
+        });
     }
 
     public function scopePublished($query)

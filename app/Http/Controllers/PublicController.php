@@ -49,7 +49,7 @@ class PublicController extends Controller
     public function struktur()
     {
         // Query committees with active members grouped by position level
-        $committees = Committee::with(['member.village', 'position'])
+        $committees = Committee::with(['member.village', 'position', 'province', 'regency', 'district', 'village'])
             ->whereHas('member', function ($q) {
                 $q->where('status', 'Aktif');
             })

@@ -11,6 +11,8 @@ use App\Models\User as Member;
 use App\Models\Committee;
 use App\Models\Article;
 use App\Models\Event;
+use App\Models\Tps;
+use App\Models\Office;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
@@ -249,5 +251,108 @@ class PresentationSeeder extends Seeder
                 'status' => 'Akan Datang',
             ]
         );
+
+        // 8. Seed TPS (Tempat Pemungutan Suara)
+        $tpsData = [
+            [
+                'name' => 'TPS 001 Kota Kulon',
+                'village_name' => 'Kota Kulon',
+                'latitude' => '-6.8350',
+                'longitude' => '107.9210',
+                'status' => 'Selesai',
+            ],
+            [
+                'name' => 'TPS 002 Kota Kulon',
+                'village_name' => 'Kota Kulon',
+                'latitude' => '-6.8410',
+                'longitude' => '107.9290',
+                'status' => 'Pending',
+            ],
+            [
+                'name' => 'TPS 001 Regol',
+                'village_name' => 'Regol',
+                'latitude' => '-6.8450',
+                'longitude' => '107.9180',
+                'status' => 'Selesai',
+            ],
+            [
+                'name' => 'TPS 001 Cibeusi',
+                'village_name' => 'Cibeusi',
+                'latitude' => '-6.9290',
+                'longitude' => '107.7690',
+                'status' => 'Pending',
+            ],
+            [
+                'name' => 'TPS 002 Hegarmanah',
+                'village_name' => 'Hegarmanah',
+                'latitude' => '-6.9330',
+                'longitude' => '107.7760',
+                'status' => 'Selesai',
+            ],
+        ];
+
+        foreach ($tpsData as $data) {
+            $villageRecord = Village::where('name', $data['village_name'])->first();
+            if ($villageRecord) {
+                Tps::firstOrCreate(
+                    ['name' => $data['name']],
+                    [
+                        'village_id' => $villageRecord->id,
+                        'latitude' => $data['latitude'],
+                        'longitude' => $data['longitude'],
+                        'status' => $data['status'],
+                    ]
+                );
+            }
+        }
+
+        // 9. Seed Offices (Kantor / Posko)
+        $officesData = [
+            [
+                'name' => 'Kantor Pusat DPP PPP Jakarta',
+                'type' => 'Utama',
+                'address' => 'Jl. Diponegoro No. 60, Menteng, Jakarta Pusat',
+                'latitude' => -6.2008,
+                'longitude' => 106.8438,
+                'radius_meters' => 100,
+            ],
+            [
+                'name' => 'Kantor DPW PPP Jawa Barat',
+                'type' => 'Cabang',
+                'address' => 'Jl. Pelajar Pejuang 45 No. 45, Bandung',
+                'latitude' => -6.9292,
+                'longitude' => 107.6253,
+                'radius_meters' => 75,
+            ],
+            [
+                'name' => 'Kantor DPC PPP Kabupaten Sumedang',
+                'type' => 'Cabang',
+                'address' => 'Jl. Prabu Geusan Ulun No. 25, Sumedang',
+                'latitude' => -6.8388,
+                'longitude' => 107.9253,
+                'radius_meters' => 50,
+            ],
+            [
+                'name' => 'Posko PAC PPP Jatinangor',
+                'type' => 'Posko',
+                'address' => 'Jl. Raya Bandung-Sumedang No. 88, Jatinangor',
+                'latitude' => -6.9290,
+                'longitude' => 107.7690,
+                'radius_meters' => 30,
+            ],
+        ];
+
+        foreach ($officesData as $off) {
+            Office::firstOrCreate(
+                ['name' => $off['name']],
+                [
+                    'type' => $off['type'],
+                    'address' => $off['address'],
+                    'latitude' => $off['latitude'],
+                    'longitude' => $off['longitude'],
+                    'radius_meters' => $off['radius_meters'],
+                ]
+            );
+        }
     }
 }

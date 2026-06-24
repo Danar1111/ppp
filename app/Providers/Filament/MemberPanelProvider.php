@@ -29,6 +29,7 @@ class MemberPanelProvider extends PanelProvider
             ->brandName('Portal Anggota PPP')
             ->brandLogo(fn () => view('filament.components.sidebar-brand'))
             ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/logo.svg'))
             ->login(\App\Filament\Pages\Auth\CustomLogin::class)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->darkMode(false)

@@ -2,9 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
+use App\Models\Office;
 use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
@@ -32,8 +30,10 @@ class AbsensiHarian extends Page implements HasForms
 
     public function mount(): void
     {
+        // Try to default to the first office if exists
+        $firstOffice = Office::first();
         $this->form->fill([
-            'level' => 'DPP',
+            'office_id' => $firstOffice?->id,
         ]);
     }
 
@@ -41,76 +41,29 @@ class AbsensiHarian extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Konfigurasi Kantor Sekretariat')
-                    ->description('Pilih tingkat kantor sekretariat untuk menghasilkan QR Code presensi harian.')
-                    ->schema([
-                        Select::make('level')
-                            ->label('Tingkat Kantor')
-                            ->options([
-                                'DPP' => 'Pusat (DPP)',
-                                'DPW' => 'Wilayah (DPW)',
-                                'DPC' => 'Cabang (DPC)',
-                                'PAC' => 'Kecamatan (PAC)',
-                            ])
-                            ->required()
-                            ->live()
-                            ->afterStateUpdated(function ($set) {
-                                $set('province_code', null);
-                                $set('regency_code', null);
-                                $set('district_code', null);
-                            }),
-
-                        Select::make('province_code')
-                            ->label('Provinsi')
-                            ->options(Province::pluck('name', 'code'))
-                            ->required()
-                            ->visible(fn ($get) => $get('level') === 'DPW')
-                            ->live(),
-
-                        Select::make('regency_code')
-                            ->label('Kabupaten / Kota')
-                            ->options(Regency::pluck('name', 'code'))
-                            ->required()
-                            ->visible(fn ($get) => $get('level') === 'DPC')
-                            ->live(),
-
-                        Select::make('district_code')
-                            ->label('Kecamatan')
-                            ->options(District::pluck('name', 'code'))
-                            ->required()
-                            ->visible(fn ($get) => $get('level') === 'PAC')
-                            ->live(),
-                    ])
-                    ->columns(2)
+                Select::make('office_id')
+                    ->label('Pilih Kantor / Posko')
+                    ->options(Office::pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->live(),
             ])
             ->statePath('data');
     }
 
     /**
-     * Generate the daily check-in URL based on selected level and region.
+     * Generate the daily check-in URL based on selected office.
      */
     public function getQrUrl(): string
     {
-        $level = $this->data['level'] ?? 'DPP';
-        $code = 'nasional';
+        $officeId = $this->data['office_id'] ?? null;
 
-        if (empty($level)) {
-            $level = 'DPP';
+        if (!$officeId) {
+            return '';
         }
 
-        if ($level === 'DPW') {
-            $code = $this->data['province_code'] ?? 'test-dpw';
-        } elseif ($level === 'DPC') {
-            $code = $this->data['regency_code'] ?? 'test-dpc';
-        } elseif ($level === 'PAC') {
-            $code = $this->data['district_code'] ?? 'test-pac';
-        }
-
-        if (empty($code)) {
-            $code = 'test-' . strtolower($level);
-        }
-
-        return route('absen.harian', ['level' => $level, 'code' => $code]);
+        return route('absen.harian', ['office' => $officeId]);
     }
 
     /**
@@ -118,29 +71,11 @@ class AbsensiHarian extends Page implements HasForms
      */
     public function getOfficeName(): string
     {
-        $level = $this->data['level'] ?? 'DPP';
+        $officeId = $this->data['office_id'] ?? null;
 
-        if (empty($level)) {
-            $level = 'DPP';
-        }
-
-        if ($level === 'DPP') {
-            return 'Kantor Pusat DPP PPP';
-        }
-
-        if ($level === 'DPW' && ($this->data['province_code'] ?? null)) {
-            $province = Province::where('code', $this->data['province_code'])->first();
-            return 'Kantor DPW PPP Provinsi ' . ($province ? $province->name : '');
-        }
-
-        if ($level === 'DPC' && ($this->data['regency_code'] ?? null)) {
-            $regency = Regency::where('code', $this->data['regency_code'])->first();
-            return 'Kantor DPC PPP ' . ($regency ? $regency->name : '');
-        }
-
-        if ($level === 'PAC' && ($this->data['district_code'] ?? null)) {
-            $district = District::where('code', $this->data['district_code'])->first();
-            return 'Kantor PAC PPP Kecamatan ' . ($district ? $district->name : '');
+        if ($officeId) {
+            $office = Office::find($officeId);
+            return $office ? $office->name : 'Kantor Sekretariat PPP';
         }
 
         return 'Kantor Sekretariat PPP';

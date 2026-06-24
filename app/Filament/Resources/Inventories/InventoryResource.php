@@ -26,6 +26,10 @@ class InventoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Inventaris';
+
+    protected static ?string $modelLabel = 'Inventaris';
+
     public static function form(Schema $schema): Schema
     {
         return InventoryForm::configure($schema);

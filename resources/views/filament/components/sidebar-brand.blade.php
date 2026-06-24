@@ -9,8 +9,9 @@
          x-transition:enter-end="opacity-100"
          x-transition:leave="transition ease-in duration-150" 
          x-transition:leave-start="opacity-100" 
-         x-transition:leave-end="opacity-0">
-        <p class="font-bold text-[18px] leading-none fi-brand-name">{{ filament()->getBrandName() }}</p>
-        <p class="text-[10px] font-semibold uppercase tracking-widest mt-1.5 fi-brand-subtitle">Political Management</p>
+         x-transition:leave-end="opacity-0"
+         class="flex flex-col justify-center">
+        <p class="font-bold text-[14px] leading-none text-white uppercase tracking-wide fi-brand-name">SISTEM MANAJEMEN</p>
+        <p class="text-[8px] font-bold uppercase tracking-wider mt-1 text-[#D97706]/90 fi-brand-subtitle">PARTAI PERSATUAN PEMBANGUNAN</p>
     </div>
 </div>

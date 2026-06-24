@@ -51,10 +51,12 @@ class EventsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->recordUrl(fn (Event $record): string => \App\Filament\Resources\Events\EventResource::getUrl('view', ['record' => $record]))
             ->filters([
                 //
             ])
             ->recordActions([
+                \Filament\Actions\ViewAction::make(),
                 EditAction::make(),
                 Action::make('liveScanner')
                     ->label('Scanner Panitia')

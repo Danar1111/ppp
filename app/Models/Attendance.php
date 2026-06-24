@@ -13,6 +13,7 @@ class Attendance extends Model
     protected $fillable = [
         'member_id',
         'event_id',
+        'office_id',
         'type',
         'scanned_at',
         'location_lat',
@@ -31,5 +32,10 @@ class Attendance extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function office(): BelongsTo
+    {
+        return $this->belongsTo(Office::class);
     }
 }

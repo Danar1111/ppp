@@ -67,7 +67,7 @@
 
                 <div class="flex-1 p-8 relative z-10">
                     <span class="px-3 py-1 bg-amber-50 text-[#904d00] text-[10px] font-bold rounded-full uppercase tracking-widest mb-4 inline-block">
-                        Dashboard Overview
+                        Ikhtisar Dasbor
                     </span>
                     <h2 class="text-2xl font-bold text-[#002810] mb-3">
                         Selamat Datang, {{ Auth::user()->name }}!
@@ -96,8 +96,8 @@
                         <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg rotate-3 p-3">
                             <img src="{{ asset('images/logo.svg') }}" class="w-full h-full object-contain" alt="Logo PPP">
                         </div>
-                        <p class="text-[#00401E] text-xs font-bold uppercase tracking-widest">SIP - PPP</p>
-                        <p class="text-slate-400 text-[10px] mt-1">Sistem Informasi Partai</p>
+                        <p class="text-[#00401E] text-xs font-bold uppercase tracking-widest">Sistem Manajemen PPP</p>
+                        <p class="text-slate-400 text-[10px] mt-1">Partai Persatuan Pembangunan</p>
                     </div>
                 </div>
             </div>

@@ -26,6 +26,10 @@ class VillageResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Kelurahan / Desa';
+
+    protected static ?string $modelLabel = 'Kelurahan / Desa';
+
     public static function form(Schema $schema): Schema
     {
         return VillageForm::configure($schema);

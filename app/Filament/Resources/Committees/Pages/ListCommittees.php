@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Committees\Pages;
 use App\Filament\Resources\Committees\CommitteeResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListCommittees extends ListRecords
 {
@@ -16,4 +18,6 @@ class ListCommittees extends ListRecords
             CreateAction::make(),
         ];
     }
+
+
 }

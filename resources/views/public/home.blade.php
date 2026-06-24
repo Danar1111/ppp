@@ -24,15 +24,27 @@
                         Selamat datang di portal resmi Partai Persatuan Pembangunan. Wadah konsolidasi kader, manajemen informasi operasional, dan transparansi administrasi partai menuju kejayaan bersama.
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-hero-up delay-300">
-                        @auth('member')
-                            <a href="/portal" class="w-full sm:w-auto px-8 py-3 bg-[#D97706] hover:bg-[#B45309] text-white font-bold rounded-xl transition duration-200 shadow-lg text-center">
-                                Portal Saya
-                            </a>
+                        @if(auth()->check())
+                            @if(auth()->user()->hasAnyRole([
+                                'Super Admin',
+                                'Admin Pusat (DPP)',
+                                'Admin Wilayah (DPW)',
+                                'Admin Cabang (DPC)',
+                                'Admin Kecamatan (PAC)'
+                            ]))
+                                <a href="/admin" class="w-full sm:w-auto px-8 py-3 bg-[#D97706] hover:bg-[#B45309] text-white font-bold rounded-xl transition duration-200 shadow-lg text-center">
+                                    Dashboard Admin
+                                </a>
+                            @else
+                                <a href="/portal" class="w-full sm:w-auto px-8 py-3 bg-[#D97706] hover:bg-[#B45309] text-white font-bold rounded-xl transition duration-200 shadow-lg text-center">
+                                    Portal Saya
+                                </a>
+                            @endif
                         @else
                             <a href="/portal/login" class="w-full sm:w-auto px-8 py-3 bg-[#D97706] hover:bg-[#B45309] text-white font-bold rounded-xl transition duration-200 shadow-lg text-center">
                                 Login Anggota
                             </a>
-                        @endauth
+                        @endif
                         <a href="#cek-nik" class="w-full sm:w-auto px-8 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold rounded-xl transition duration-200 text-center">
                             Cek Keanggotaan
                         </a>

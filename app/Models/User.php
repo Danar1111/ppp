@@ -59,6 +59,24 @@ class User extends Authenticatable implements FilamentUser
         return false;
     }
 
+    protected static function booted(): void
+    {
+        static::deleting(function ($user) {
+            if ($user->photo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->photo);
+            }
+        });
+
+        static::updating(function ($user) {
+            if ($user->isDirty('photo')) {
+                $oldPhoto = $user->getOriginal('photo');
+                if ($oldPhoto) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPhoto);
+                }
+            }
+        });
+    }
+
     public function village(): BelongsTo
     {
         return $this->belongsTo(Village::class);

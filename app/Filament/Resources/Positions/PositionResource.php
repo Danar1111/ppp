@@ -26,6 +26,10 @@ class PositionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Jabatan';
+
+    protected static ?string $modelLabel = 'Jabatan';
+
     public static function form(Schema $schema): Schema
     {
         return PositionForm::configure($schema);

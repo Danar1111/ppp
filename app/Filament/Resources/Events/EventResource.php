@@ -26,6 +26,10 @@ class EventResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $pluralModelLabel = 'Kegiatan';
+
+    protected static ?string $modelLabel = 'Kegiatan';
+
     public static function form(Schema $schema): Schema
     {
         return EventForm::configure($schema);
@@ -39,7 +43,7 @@ class EventResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Resources\Events\RelationManagers\AttendancesRelationManager::class,
         ];
     }
 
@@ -48,6 +52,7 @@ class EventResource extends Resource
         return [
             'index' => ListEvents::route('/'),
             'create' => CreateEvent::route('/create'),
+            'view' => \App\Filament\Resources\Events\Pages\ViewEvent::route('/{record}'),
             'edit' => EditEvent::route('/{record}/edit'),
         ];
     }
